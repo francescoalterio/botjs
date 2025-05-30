@@ -56,6 +56,13 @@ client.on("messageCreate", async (message) => {
     }
     // Procesar fecha
     if (datos.fecha) {
+      const fechaRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+      if (!fechaRegex.test(datos.fecha)) {
+        await message.channel.send(
+          "La fecha está mal. Debe tener el formato dd/mm/yyyy (por ejemplo: 25/12/2025)."
+        );
+        return;
+      }
       const [d, m, y] = datos.fecha.split("/");
       datos.fecha = new Date(`${y}-${m}-${d}T00:00:00Z`);
     }
